@@ -1,12 +1,547 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" data-lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>preJS minimum template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KMLでの配布、もうやめませんか。 | Stop Shipping KML</title>
+<meta name="description" content="データ配布フォーマットとしてのKMLの問題点を、一次資料と実データで解説する非営利の啓発サイト。">
+
+<!-- Open Graph / Twitter -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="KMLでの配布、もうやめませんか。 | Stop Shipping KML">
+<meta property="og:description" content="データを配る形式としてのKMLの構造的な問題を、一次資料と実データで。属性をHTMLに封印する慣習、変換の非対称性、そして利用規約リスク。">
+<meta property="og:image" content="ogp.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="脱KML — KMLでの配布、もうやめませんか。 / Stop Shipping KML">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="KMLでの配布、もうやめませんか。 | Stop Shipping KML">
+<meta name="twitter:description" content="データを配る形式としてのKMLの構造的な問題を、一次資料と実データで。">
+<meta name="twitter:image" content="ogp.png">
+<meta name="twitter:image:alt" content="脱KML — Stop Shipping KML">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="theme-color" content="#F5F2EA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="app"></div>
-    <script type="module" src="/index.js"></script>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="doc-no">
+      <span class="ja">勧告　第一号　　令和八年七月十日</span>
+      <span class="en">ADVISORY No.1 — July 10, 2026</span>
+    </div>
+    <div class="lang-toggle" role="group" aria-label="Language">
+      <button id="btn-ja" aria-pressed="true" onclick="setLang('ja')">日本語</button>
+      <button id="btn-en" aria-pressed="false" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<div class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="stamp" aria-hidden="true">脱<br>KML</div>
+      <div>
+        <p class="eyebrow"><span class="ja">地理空間データ配布形式に関する勧告</span><span class="en">AN ADVISORY ON GEOSPATIAL DISTRIBUTION FORMATS</span></p>
+        <h1>
+          <span class="ja">KMLでの配布、<br>もうやめませんか。</span>
+          <span class="en">It's time to stop<br>shipping KML.</span>
+        </h1>
+        <p class="lede">
+          <span class="ja">2027年6月25日、Google Earth Pro デスクトップ版の配布が終了します。20年にわたり「開けるけれど、データとして使えない」地理データの形を定着させたツールは、以後更新されないまま現場に残ります。<strong>データを配る形式としてのKMLを、ここで引退させましょう。</strong></span>
+          <span class="en">On June 25, 2027, Google Earth Pro for desktop will no longer be available for download. The tool that spent two decades normalizing geodata that <strong>opens fine but can't be used as data</strong> will remain in the field, never to be updated again. Let's retire KML as a distribution format.</span>
+        </p>
+        <div class="countdown" role="status">
+          <div class="cd-label">
+            <span class="ja">Google Earth Pro デスクトップ版　配布終了まで</span>
+            <span class="en">Until Google Earth Pro desktop downloads end</span>
+          </div>
+          <div class="cd-num">
+            <b id="cd-days">—</b>
+            <span class="ja">日（2027年6月25日）</span>
+            <span class="en">days (June 25, 2027)</span>
+          </div>
+        </div>
+        <div class="hero-cta">
+          <a class="btn primary" href="#problem"><span class="ja">30秒でわかる問題へ</span><span class="en">The problem in 30 seconds</span></a>
+          <a class="btn" href="#action"><span class="ja">今日からできること</span><span class="en">What you can do today</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 1. PROBLEM ============ -->
+<section id="problem">
+  <div class="wrap">
+    <p class="art-label"><span class="ja">第一条</span><span class="en">ARTICLE 1</span></p>
+    <h2><span class="ja">30秒でわかる、KMLの問題</span><span class="en">The problem, in 30 seconds</span></h2>
+
+    <div class="ja">
+      <p>名簿を作るとき、「名前」「住所」「電話番号」は別々の列に分けます。</p>
+      <p>ところが、世の中に流通するKMLファイルの多くは、これを<em>全部1つのセルに、文字色や罫線ごと貼り付けた状態</em>になっています。</p>
+      <p>人間がクリックして読む分には問題ありません。しかし——</p>
+      <ul class="plain">
+        <li>住所で並べ替える → できない</li>
+        <li>営業時間で絞り込む → できない</li>
+        <li>電話番号の一覧を作る → できない</li>
+      </ul>
+      <p>これをやるには、貼り付けられたHTMLを解読する専用プログラムをファイルごとに書くことになります。<strong>地図データの価値の半分は位置情報、もう半分は属性情報です。KMLの流通慣習は、後者を事実上封印した状態でデータを世界に広めてきました。</strong></p>
+    </div>
+    <div class="en">
+      <p>When you build a contact list, names, addresses and phone numbers go in separate columns.</p>
+      <p>Most KML files in circulation are the equivalent of <em>pasting all of that into one cell — colors, table borders and all.</em></p>
+      <p>Fine for a human clicking a pin. But —</p>
+      <ul class="plain">
+        <li>Sort by address? No.</li>
+        <li>Filter by opening hours? No.</li>
+        <li>Extract the phone numbers? No.</li>
+      </ul>
+      <p>Doing any of that means writing a custom HTML parser, per file. <strong>Half the value of geodata is the location; the other half is the attributes. The KML ecosystem has spent twenty years shipping data with that second half sealed shut.</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 2. EVIDENCE ============ -->
+<section id="evidence">
+  <div class="wrap">
+    <p class="art-label"><span class="ja">第二条</span><span class="en">ARTICLE 2</span></p>
+    <h2><span class="ja">実物を見てください</span><span class="en">See it for yourself</span></h2>
+
+    <h3><span class="ja">自治体オープンデータの実物</span><span class="en">Real municipal open data</span></h3>
+    <p>
+      <span class="ja">三重県伊勢市がオープンデータとして公式配布しているKML「観光案内所・手荷物預かり所」の実物です（2026年7月10日取得<a href="#src">[1]</a>）。市内6か所の案内所の住所・開所時間・電話番号という、本来3列で済む属性データが、各地点の <code>description</code> に<strong>HTMLの表として</strong>焼き込まれています。</span>
+      <span class="en">This is real open data, officially published as KML by the city of Ise, Japan (retrieved July 10, 2026 <a href="#src">[1]</a>): six tourist information desks, each with an address, opening hours and a phone number. Three columns of data — baked into each placemark's <code>description</code> <strong>as an HTML table</strong>, inline color styling included.</span>
+    </p>
+
+    <p class="code-cap"><b>BEFORE</b> <span class="ja">─ 配布されている実物（1地点分）</span><span class="en">─ as actually published (one placemark)</span></p>
+<pre><code>&lt;Placemark&gt;
+  &lt;name&gt;伊勢市駅観光案内所&lt;/name&gt;
+  &lt;description&gt;&lt;![CDATA[<span class="hl">&lt;table&gt;&lt;tr&gt;
+    &lt;td style="color:#0000FF;padding-right:1em;"&gt;住所&lt;/td&gt;
+    &lt;td&gt;伊勢市吹上1丁目1番4号&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;
+    &lt;td style="color:#0000FF;padding-right:1em;"&gt;開所時間&lt;/td&gt;
+    &lt;td&gt;午前9時から午後5時30分&lt;br/&gt; （年中無休）&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;
+    &lt;td style="color:#0000FF;padding-right:1em;"&gt;電話番号&lt;/td&gt;
+    &lt;td&gt;0596-65-6091&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</span>]]&gt;&lt;/description&gt;
+  &lt;styleUrl&gt;#SYMBOL2.symbolStyle&lt;/styleUrl&gt;
+  &lt;Point&gt;&lt;coordinates&gt;136.709452271461,34.4911537946984&lt;/coordinates&gt;&lt;/Point&gt;
+&lt;/Placemark&gt;</code></pre>
+
+    <p>
+      <span class="ja">住所・開所時間・電話番号は、機械から見れば「文字色 <code>#0000FF</code> 指定付きのHTML文字列」の一部でしかありません。KML仕様には属性を構造化して持つ <code>ExtendedData</code> が定義されていますが<a href="#src">[6]</a>、このファイルでは一切使われていません。</span>
+      <span class="en">To a machine, the address, hours and phone number are just fragments of an HTML string with <code>color:#0000FF</code> styling. The KML spec defines <code>ExtendedData</code> for structured attributes <a href="#src">[6]</a>; this file never uses it.</span>
+    </p>
+
+    <figure class="shot">
+      <img src="qgis-attribute-table.png" alt="QGISの属性テーブル。descriptionの列に、住所などのデータが&lt;table&gt;&lt;tr&gt;&lt;td style=&quot;color:#0000FF&quot;&gt;といったHTMLの塊のまま表示されている。idとtimestampの列はすべてNULL。" loading="lazy">
+      <figcaption>
+        <span class="ja">同じ伊勢市KMLを、専門GISソフト QGIS で読み込んだ属性テーブル。<strong>KMLは正しく読み込めています</strong>——地物6件が地図に表示され、位置も正確です。しかし属性テーブルを見ると、住所・開所時間・電話番号は <code>description</code> という1列に、<code>&lt;table&gt;&lt;tr&gt;&lt;td style="color:#0000FF..."&gt;</code> というHTMLの塊のまま押し込まれています。<code>id</code> も <code>timestamp</code> も <code>NULL</code>。<strong>「開ける」ことと「データとして使える」ことは、まったく別です。</strong>住所で並べ替えることも、電話番号だけを抜き出すことも、この状態ではできません。</span>
+        <span class="en">The same Ise City KML, loaded into QGIS, professional GIS software. <strong>The KML loads correctly</strong> — all six features appear on the map, positioned accurately. But look at the attribute table: address, hours and phone number are all crammed into a single <code>description</code> column as raw HTML — <code>&lt;table&gt;&lt;tr&gt;&lt;td style="color:#0000FF..."&gt;</code> — while <code>id</code> and <code>timestamp</code> are <code>NULL</code>. <strong>"It opens" and "it's usable as data" are two entirely different things.</strong> You cannot sort by address, or pull out just the phone numbers, from this.</span>
+      </figcaption>
+    </figure>
+
+    <p class="code-cap"><b>AFTER</b> <span class="ja">─ 同じデータの本来の姿（GeoJSON）</span><span class="en">─ the same data as it should be (GeoJSON)</span></p>
+<pre><code>{
+  "type": "Feature",
+  "geometry": { "type": "Point",
+    "coordinates": [136.709452271461, 34.4911537946984] },
+  "properties": {
+    <span class="hl">"name":    "伊勢市駅観光案内所",
+    "address": "伊勢市吹上1丁目1番4号",
+    "hours":   "午前9時から午後5時30分（年中無休）",
+    "phone":   "0596-65-6091"</span>
+  }
+}</code></pre>
+
+    <p>
+      <span class="ja">このAfterは、Beforeのdescription内HTMLを解析する<strong>専用パーサを書いて</strong>生成しました。逆方向（GeoJSON→KML）は既存ツールの1コマンドで済みます。<em>この非対称性が、本サイトの主張のすべてです。</em></span>
+      <span class="en">Producing this "After" required <strong>writing a custom parser</strong> for the description HTML. The reverse direction is a one-line command with standard tools. <em>That asymmetry is this site's entire argument.</em></span>
+    </p>
+
+    <p class="note">
+      <span class="ja">上記サンプルの出典: 「観光案内所・手荷物預かり所（MapData）」、伊勢市、<a href="https://creativecommons.org/licenses/by/4.0/deed.ja" rel="noopener">CC BY 4.0</a>（改変: 抜粋・GeoJSON変換は本サイトによる）。伊勢市オープンデータ利用規約<a href="#src">[16]</a>に基づく表記です。</span>
+      <span class="en">Sample source: "Tourist Information Desks &amp; Baggage Storage (MapData)", Ise City, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">CC BY 4.0</a> (modifications — excerpting and GeoJSON conversion — by this site), credited per the Ise City Open Data Terms of Use <a href="#src">[16]</a>.</span>
+    </p>
+
+    <h3><span class="ja">マイマップからエクスポートされるKMLの問題点</span><span class="en">What My Maps actually exports</span></h3>
+    <div class="ja">
+      <p>「昔の話では？」という疑問に答えるため、2022年・2024年・2025年に作られた3つのGoogleマイマップから書き出したKMLを実際に解析しました<a href="#src">[15]</a>。3つとも<strong>XMLとしては妥当です</strong>——壊れたファイルではありません。しかし「データとして使えるか」で見ると、制作年ごとにバラバラの欠陥が現れました。</p>
+      <ol class="findings">
+        <li><strong>属性がまるごと消える。</strong> あるファイル（69地点）は、地点名以外の属性が一切ありませんでした。<code>description</code> も <code>ExtendedData</code> も空。マイマップ上で入力していたはずの説明やカテゴリは、この出力には残っていません。</li>
+        <li><strong>座標がまるごと消える。</strong> 別のファイル（47地点）は、47件すべてに座標（<code>&lt;Point&gt;</code>）がありませんでした。持っているのは住所文字列だけで、<strong>このKMLを地理院地図やQGISで開いても地図上に何も表示されません。</strong>住所ピンで作った地図をエクスポートすると座標が落ちる、という落とし穴です。</li>
+        <li><strong>同じ情報が二重に格納される。</strong> 属性が <code>ExtendedData</code> で構造化されているファイルでも、まったく同じ内容が <code>description</code> 欄にHTML（<code>団体コード: … &lt;br&gt; 都道府県名: …</code>）として重複して書き込まれていました。この二重格納は複数のファイルで共通して確認できました。</li>
+        <li><strong>取り込み元の生データが整理されずに氾濫する。</strong> OpenStreetMap由来のデータを取り込んだファイルでは、<code>@id</code>・<code>addr:country</code>・<code>wikidata</code> など約110種類のキーがそのまま流入し、地点名は過半数が空、ファイルは約6MBに膨張していました。これはマイマップのインポート上限（5MB）を超えており、<strong>そのファイルをマイマップに戻すことすらできません。</strong></li>
+      </ol>
+      <p>部分的な改善（構造化属性 <code>ExtendedData</code> の採用など）はあります。しかし<strong>「開けるが、そのままではデータとして使えない」出力が、年をまたいで形を変えながら続いています。</strong>どの年のエクスポートが安全かを利用者が事前に知る方法はありません。</p>
+    </div>
+    <div class="en">
+      <p>To answer "isn't this old news?": we analyzed the KML exported from three different Google My Maps, made in 2022, 2024 and 2025 <a href="#src">[15]</a>. All three are <strong>valid XML</strong> — not broken files. But judged as <em>usable data</em>, each year produced a different defect.</p>
+      <ol class="findings">
+        <li><strong>The attributes vanish entirely.</strong> One file (69 placemarks) had no attributes beyond the place name — both <code>description</code> and <code>ExtendedData</code> were empty. Whatever notes or categories were entered in My Maps are simply gone from this export.</li>
+        <li><strong>The coordinates vanish entirely.</strong> Another file (47 placemarks) had no geometry at all — not one <code>&lt;Point&gt;</code>. It carried only address strings, so <strong>opening this KML in GSI Maps or QGIS shows nothing on the map.</strong> Export a map built from address pins, and the coordinates fall out.</li>
+        <li><strong>The same information is stored twice.</strong> Even in files where attributes are properly structured in <code>ExtendedData</code>, the identical content is duplicated into the <code>description</code> field as HTML (<code>Code: … &lt;br&gt; Prefecture: …</code>). This double-storage appeared across multiple files.</li>
+        <li><strong>Imported raw data floods in unorganized.</strong> A file built from OpenStreetMap data carried roughly 110 raw keys straight through — <code>@id</code>, <code>addr:country</code>, <code>wikidata</code> and the like — with over half the placemarks unnamed, ballooning to about 6 MB. That exceeds My Maps' own 5 MB import limit, meaning <strong>the file cannot even be loaded back into My Maps.</strong></li>
+      </ol>
+      <p>There are partial improvements (the adoption of structured <code>ExtendedData</code>, for one). But <strong>output that "opens yet can't be used as data as-is" persists, changing shape from year to year.</strong> Users have no way to know in advance which year's export is safe.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. WHO ============ -->
+<section id="who">
+  <div class="wrap">
+    <p class="art-label"><span class="ja">第三条</span><span class="en">ARTICLE 3</span></p>
+    <h2><span class="ja">誰がこの慣習を作ったか</span><span class="en">Who built this convention</span></h2>
+    <p>
+      <span class="ja">「フォーマットに罪はない、使い方の問題だ」という反論には、時系列で答えます。</span>
+      <span class="en">To the objection "the format is fine, usage is the problem" — a timeline.</span>
+    </p>
+    <div class="timeline">
+      <div class="tl">
+        <span class="yr">2004</span>
+        <p><span class="ja">GoogleがKeyhole社を買収し、KMLはGoogleの管理下に入る。</span><span class="en">Google acquires Keyhole; KML becomes Google's format.</span></p>
+      </div>
+      <div class="tl">
+        <span class="yr">2008</span>
+        <p><span class="ja">GoogleがKML 2.2をOGC（地理空間情報の国際標準化団体）に提出し、国際標準となる<a href="#src">[7]</a>。この仕様には属性を構造化して持つ <code>ExtendedData</code>（型なしData、型付きSchema/SchemaData）が定義されている。<strong>書いたのはGoogle自身。</strong></span><span class="en">Google submits KML 2.2 to the OGC and it becomes an international standard <a href="#src">[7]</a>. The spec defines <code>ExtendedData</code> — untyped Data pairs and typed Schema/SchemaData — for structured attributes. <strong>Written by Google.</strong></span></p>
+      </div>
+      <div class="tl">
+        <span class="yr">2008–<span class="ja">現在</span><span class="en">present</span></span>
+        <p><span class="ja">Google公式ドキュメントは現在も「Google Earthはこの型付き情報を使用しない」と明記している<a href="#src">[6]</a>。Google Earth・マイマップという世界最大のKML生成環境は、属性をdescriptionのHTMLとして出力する形を標準にした。</span><span class="en">Google's own documentation still states that Google Earth does not use the typed information <a href="#src">[6]</a>. Google Earth and My Maps — the largest KML-producing environment on the planet — standardized emitting attributes as description HTML instead.</span></p>
+      </div>
+      <div class="tl">
+        <span class="yr">2026.7.7</span>
+        <p><span class="ja">Googleがデスクトップ版の配布終了（2027年6月25日）を発表<a href="#src">[3]</a>。このソフトウェアが更新される可能性は公式になくなった。</span><span class="en">Google announces the end of desktop downloads (June 25, 2027) <a href="#src">[3]</a>. The probability of this software ever being fixed is now officially zero.</span></p>
+      </div>
+    </div>
+    <p>
+      <span class="ja">仕様に正しい方法を定義したのはGoogleであり、それを自社の主要製品で採用しなかったのもGoogleです。標準の起草者が自らの標準の構造化機構を実装しないまま20年が経過したとき、流通するファイルの品質を「利用者の運用」に帰責するのは妥当ではありません。</span>
+      <span class="en">Google defined the correct mechanism, and Google declined to adopt it in its own flagship products. After twenty years of that, attributing the quality of circulating files to "user error" is not a serious position.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ============ 4. CASES ============ -->
+<section id="cases">
+  <div class="wrap">
+    <p class="art-label"><span class="ja">第四条</span><span class="en">ARTICLE 4</span></p>
+    <h2><span class="ja">事例ファイル</span><span class="en">Case files</span></h2>
+    <div class="cases">
+
+      <article class="case" data-no="CASE 01">
+        <h3><span class="ja">自治体オープンデータの標準形になっている</span><span class="en">The default shape of municipal open data</span></h3>
+        <p>
+          <span class="ja">本サイトのメインサンプル（第二条）は、伊勢市が公式に配布しているオープンデータそのものです。市はさらに、KMLの利用方法としてGoogleマイマップへのインポート手順を公式ページで案内しています<a href="#src">[2]</a>。<strong>これは職員の落ち度ではありません。</strong>無料で導入しやすいツールを選び、市民に説明しやすい手順を整備した——行政として合理的な判断です。問題は、その合理的な判断の受け皿となったツールとフォーマットが、属性データをHTMLに封印した形で出力することです。同様の構図は全国の自治体で見られます。</span>
+          <span class="en">Our main sample in Article 2 is official open data as published. The city also officially documents Google My Maps as the recommended way to use its KML files <a href="#src">[2]</a>. <strong>None of this is staff error.</strong> Choosing free, accessible tools and writing citizen-friendly instructions is rational public administration. The problem is that the tool and format receiving those rational decisions emit data with its attributes sealed inside HTML. The same pattern repeats across municipalities nationwide.</span>
+        </p>
+      </article>
+
+      <article class="case" data-no="CASE 02">
+        <h3><span class="ja">同じKMLなのに、開けない</span><span class="en">Same KML, won't open</span></h3>
+        <p>
+          <span class="ja">Googleマイマップから書き出したKMLは、国土地理院の「地理院地図」でそのまま表示できず、変換ツール（地理院マップシート）を挟む必要がある場合があることが利用者向け解説で知られています<a href="#src">[10]</a>。KMLが常にどこでも同じように開けるとは限りません。同じ拡張子でも、どのツールがどう書き出したかによって挙動が変わり、<strong>ツール間の受け渡しでつまずくことがあります。</strong></span>
+          <span class="en">KML exported from Google My Maps is documented to sometimes need a conversion step (via the GSI "Map Sheet" tool) before it displays in GSI Maps, the service run by Japan's national mapping agency <a href="#src">[10]</a>. The same extension does not guarantee the same behavior: how a given tool wrote the file changes how it opens, and <strong>files can stumble when passed between tools.</strong> </span>
+        </p>
+      </article>
+
+      <article class="case" data-no="CASE 03">
+        <h3><span class="ja">2027年、修正の可能性が消える</span><span class="en">2027: the fix window closes</span></h3>
+        <p>
+          <span class="ja">第二条の補助サンプルが示す通り、2026年時点のマイマップ出力にも構造上の問題が残っています。そしてGoogle Earth Proデスクトップ版は2027年6月25日に配布を終え、以後更新されません<a href="#src">[3]</a>。Web版には最大25万頂点というデータ読み込み制限があり、業務用途の代替として不十分だという利用者の指摘が公開の場で多数なされています<a href="#src">[4]</a>。出力側の修正が見込めない以上、改善の余地があるのは<strong>配布する側の選択</strong>だけです。</span>
+          <span class="en">As the secondary sample in Article 2 shows, structural problems persist in My Maps output as of 2026. Google Earth Pro for desktop stops being distributed on June 25, 2027, and will receive no further updates <a href="#src">[3]</a>; the web version caps dataset imports at 250,000 vertices, which professional users have publicly described as inadequate <a href="#src">[4]</a>. With no fix coming on the output side, the only variable left is <strong>what publishers choose to ship.</strong></span>
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. WORLD ============ -->
+<section id="world">
+  <div class="wrap">
+    <p class="art-label"><span class="ja">第五条</span><span class="en">ARTICLE 5</span></p>
+    <h2><span class="ja">世界共通の問題です</span><span class="en">A worldwide problem</span></h2>
+    <p>
+      <span class="ja">KMLのdescription問題は、日本に固有の話ではありません。アメリカ国家安全保障局（NSA）はGitHubで、KMLのdescription欄に詰め込まれたHTMLを解析して属性テーブルに展開するQGISプラグイン「KML Tools」を公開しています<a href="#src">[8]</a>。そのドキュメントには次の記述があります。</span>
+      <span class="en">The description problem is not local to Japan. The U.S. National Security Agency publishes "KML Tools," an open-source QGIS plugin whose job includes parsing the HTML stuffed into KML description fields back into attribute tables <a href="#src">[8]</a>. Its documentation states:</span>
+    </p>
+    <blockquote>
+      <span class="ja">「descriptionエントリに追加情報を含める標準的な方法が存在しないため、すべてのケースを展開できる方法を考案するのは困難である」</span>
+      <span class="en">"Because there is no standard way of including additional information in the KML description entry, it is difficult to come up with a way to expand all cases."</span>
+      <footer><span class="ja">NSA「KML Tools」ドキュメントより（当サイト訳）</span><span class="en">— NSA, "KML Tools" documentation</span></footer>
+    </blockquote>
+    <p>
+      <span class="ja">同プラグインが対応するのは、現場で観測された3つの方言——2列HTMLテーブル、<code>tag=value</code>、<code>tag: value</code>——です。伊勢市のサンプルは、このうち<strong>1番目の方言</strong>に該当します。国家機関が地図ファイル内のHTML方言のパーサを開発・公開しているという事実が、この問題の広がりを示しています。</span>
+      <span class="en">The plugin handles the three dialects observed in the wild — two-column HTML tables, <code>tag=value</code>, and <code>tag: value</code>. Our Ise sample is <strong>dialect number one</strong>. When a national agency maintains parsers for HTML dialects inside map files, the scale of the problem speaks for itself.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ============ 6. OPTIONS ============ -->
+<section id="options">
+  <div class="wrap">
+    <p class="art-label"><span class="ja">第六条</span><span class="en">ARTICLE 6</span></p>
+    <h2><span class="ja">選べる時代になった</span><span class="en">You have better options now</span></h2>
+    <p>
+      <span class="ja">KMLが広まった2005年頃、「非エンジニアが地理データを作って共有できる形式」に実質的な選択肢はありませんでした。現在は、用途ごとに明確に優れた形式が揃っています。</span>
+      <span class="en">Around 2005, when KML spread, there was no real alternative for non-engineers creating and sharing geodata. Today there is a clearly better format for every job.</span>
+    </p>
+    <div class="tbl-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th><span class="ja">用途</span><span class="en">Job</span></th>
+            <th><span class="ja">形式</span><span class="en">Format</span></th>
+            <th><span class="ja">KMLに対する優位点</span><span class="en">Advantage over KML</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="ja">データ配布（〜数十MB）</span><span class="en">Distribution (up to tens of MB)</span></td>
+            <td>GeoJSON<br><small>RFC 7946</small></td>
+            <td><span class="ja">属性が最初から構造化。主要な地図ライブラリ・GISツール・データベースがネイティブ対応。テキストなので差分管理も可能</span><span class="en">Structured attributes by design; native support across mapping libraries, GIS tools, databases; diffable text</span></td>
+          </tr>
+          <tr>
+            <td><span class="ja">大規模データの配布</span><span class="en">Large datasets</span></td>
+            <td>FlatGeobuf</td>
+            <td><span class="ja">空間インデックス内蔵。HTTP Range Requestで必要範囲のみ取得でき、専用サーバ不要</span><span class="en">Built-in spatial index; range-request streaming over plain HTTP, no server required</span></td>
+          </tr>
+          <tr>
+            <td><span class="ja">分析基盤</span><span class="en">Analytics</span></td>
+            <td>GeoParquet</td>
+            <td><span class="ja">列指向＋圧縮。DuckDBやBigQueryから直接クエリ可能</span><span class="en">Columnar and compressed; direct queries from DuckDB or BigQuery</span></td>
+          </tr>
+          <tr>
+            <td><span class="ja">タイル配信</span><span class="en">Tiles</span></td>
+            <td>PMTiles</td>
+            <td><span class="ja">タイルセット全体を単一ファイルで保持し、静的ホスティングで配信可能</span><span class="en">A full tileset in one file on static hosting</span></td>
+          </tr>
+          <tr>
+            <td><span class="ja">表計算文化圏への配布</span><span class="en">Spreadsheet users</span></td>
+            <td>CSV<br><small><span class="ja">緯度経度列付き</span><span class="en">with lat/lon</span></small></td>
+            <td><span class="ja">Excelで開ける。Googleマイマップにもそのままインポート可能</span><span class="en">Opens in Excel; imports directly into Google My Maps</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      <span class="ja">共通点は2つ。<strong>属性が構造化されている</strong>こと、<strong>表示スタイルとデータが分離されている</strong>こと。KMLは「特定ビューアでどう見えるか」を中心にデータ・HTML・装飾を一体化する2005年の設計を保ったまま流通し続けている、事実上唯一の現役フォーマットです。かつてKMLを配布形式に選ぶ最後の理由は「Google Earthで直接開ける」ことでしたが、<strong>Web版Google Earthは今やGeoJSONもShapefileも直接読み込めます</strong><a href="#src">[17]</a>。その最後の理由すら、もう成り立ちません。</span>
+      <span class="en">They share two properties: <strong>structured attributes</strong> and <strong>separation of styling from data</strong>. KML is effectively the last format in active circulation designed around a 2005 question — "how will this render in one particular viewer?" — fusing data, HTML and decoration into one lump. The last reason to ship KML used to be "it opens directly in Google Earth" — but <strong>Google Earth on the web now imports GeoJSON and Shapefile directly too</strong> <a href="#src">[17]</a>. Even that last reason no longer holds.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ============ 6.5 BARRIER ============ -->
+<section id="barrier">
+  <div class="wrap">
+    <p class="art-label"><span class="ja">第七条</span><span class="en">ARTICLE 7</span></p>
+    <h2><span class="ja">GISの入口を、ふさいでいる</span><span class="en">It blocks the on-ramp to GIS</span></h2>
+
+    <div class="ja">
+      <p>ここまでの話は、専門家だけの問題ではありません。むしろ影響を最も強く受けるのは、これから地理空間データに触れようとする一般の人々です。</p>
+      <p>非エンジニアが地図データに出会うとき、その入口はたいていGoogleのサービスです。Googleマップ、マイマップ、そしてGoogle Earth——世界で最も広く使われ、最も敷居が低いツール群。そこからデータを持ち出そうとすると、出てくるのはKMLです。そしてそのKMLは、これまで見てきた通り可搬性が低い。</p>
+      <p>初心者の体験は、こうたどります。</p>
+      <ol class="findings">
+        <li>マイマップで地図を作り、KMLでエクスポートする（ここまでは簡単）</li>
+        <li>ツールによっては、そのまま開けないことがある。マイマップ出力のKMLは、たとえば地理院地図で表示するのに変換のひと手間を要する場合が知られています<a href="#src">[10]</a></li>
+        <li>うまく表示できても、いざデータとして扱おうとすると、属性がdescriptionのHTMLに埋まっていて取り出せない。これは伊勢市の例（<a href="#evidence">第二条</a>）のように、正しく地図に表示されるKMLでも同じです</li>
+        <li>取り出すには変換ツールと、場合によっては専用パーサが必要になる（<a href="#evidence">第二条</a>）</li>
+      </ol>
+      <p>プログラミングやGISの素養がある人なら、この壁は「面倒」で済みます。しかし<strong>初学者にとって、この一連の障害はしばしば入口そのものになります。</strong>「地図データは難しい」「自分には手に負えない」という最初の印象を、可搬性の低いフォーマットが作り出してしまう。</p>
+      <p>最も敷居の低いツールが、最も可搬性の低い形式を出力する——この組み合わせが、地理空間データを誰もが扱える時代への移行を、入口のところで押しとどめています。<em>本来なら、地図を作れた人はデータも扱えるはずなのです。</em>その間に変換と規約解釈の壁を置いているのは、フォーマットの設計です。</p>
+    </div>
+    <div class="en">
+      <p>None of this is a problem for experts only. The people hit hardest are the ones just beginning to touch geospatial data.</p>
+      <p>For a non-engineer, the on-ramp to map data is almost always a Google service — Google Maps, My Maps, Google Earth: the most widely used, lowest-barrier tools in the world. Try to take your data out, and what you get is KML. And that KML, as we've seen, travels poorly.</p>
+      <p>The beginner's path runs like this:</p>
+      <ol class="findings">
+        <li>Build a map in My Maps, export as KML — easy so far</li>
+        <li>Depending on the tool, it may not open as-is: My Maps KML is documented, for instance, to need a conversion step before it displays in GSI Maps <a href="#src">[10]</a></li>
+        <li>Even when it does display, the moment you try to treat it as data the attributes are buried in description HTML, unreachable — true even of KML that renders perfectly, like the Ise example (<a href="#evidence">Article 2</a>)</li>
+        <li>Getting them out needs a conversion tool and sometimes a custom parser (<a href="#evidence">Article 2</a>)</li>
+      </ol>
+      <p>For someone with programming or GIS background, this wall is merely "annoying." But <strong>for a beginner, this chain of obstacles is often the on-ramp itself.</strong> A low-portability format manufactures the first impression that "map data is hard" and "this is beyond me."</p>
+      <p>The lowest-barrier tools emit the lowest-portability format — and that combination stalls, right at the entrance, the move toward an era where anyone can work with geospatial data. <em>Someone who could make a map should be able to handle its data.</em> What stands between the two is a wall of conversion and license interpretation, put there by the format's design.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. ACTION ============ -->
+<section id="action">
+  <div class="wrap">
+    <p class="art-label"><span class="ja">第八条</span><span class="en">ARTICLE 8</span></p>
+    <h2><span class="ja">今日からできること</span><span class="en">What you can do today</span></h2>
+
+    <h3><span class="ja">データを公開する立場の方へ（自治体・企業・研究機関）</span><span class="en">If you publish data</span></h3>
+    <p>
+      <span class="ja">GeoJSON（またはCSV）を正のデータとして公開してください。KMLが必要な利用者には、正データから変換したものを併記すれば足ります。逆方向は本ページで示した通り、専用パーサの開発を意味します。</span>
+      <span class="en">Make GeoJSON (or CSV) the canonical dataset. For users who need KML, generate it from the canonical data. The reverse direction, as demonstrated above, means writing a custom parser.</span>
+    </p>
+    <pre><code>ogr2ogr out.kml in.geojson   <span class="cm"># <span class="ja">正データ→KML併記はこの1行</span><span class="en">canonical → courtesy KML, one line</span></span></code></pre>
+
+    <h3><span class="ja">KMLを受け取ってしまった方へ</span><span class="en">If you've been handed KML</span></h3>
+    <ul class="plain">
+      <li><span class="ja">コマンドライン: <code>ogr2ogr output.geojson input.kml</code>（KMZも直接読み込み可能<a href="#src">[11]</a>）</span><span class="en">CLI: <code>ogr2ogr output.geojson input.kml</code> (reads KMZ directly <a href="#src">[11]</a>)</span></li>
+      <li><span class="ja">ブラウザ / JavaScript: <code>@tmcw/togeojson</code><a href="#src">[12]</a></span><span class="en">Browser / JS: <code>@tmcw/togeojson</code> <a href="#src">[12]</a></span></li>
+      <li><span class="ja">QGIS: 「KML Tools」プラグイン<a href="#src">[9]</a>。description内の2列HTMLテーブルや <code>tag: value</code> を属性テーブルに展開できます</span><span class="en">QGIS: the <strong>KML Tools</strong> plugin <a href="#src">[9]</a> expands two-column HTML tables and <code>tag: value</code> pairs from descriptions into attribute tables</span></li>
+    </ul>
+
+    <h3><span class="ja">組織内でKMLが標準になっている方へ</span><span class="en">If KML is entrenched at your organization</span></h3>
+    <p>
+      <span class="ja">「正データをGeoJSONに、KMLは自動生成の派生物に」という構成なら、既存のKML利用者を切り捨てずに移行でき、変更は「廃止」ではなく「追加」として提案できます。このページ（日英）を添付資料としてご利用ください。</span>
+      <span class="en">"Canonical data in GeoJSON; KML as an auto-generated derivative" migrates without breaking anyone's workflow — an addition, not a removal. Feel free to attach this page (available in English and Japanese).</span>
+    </p>
+  </div>
+</section>
+
+<!-- ============ 8. FAQ ============ -->
+<section id="faq">
+  <div class="wrap">
+    <p class="art-label"><span class="ja">第九条</span><span class="en">ARTICLE 9</span></p>
+    <h2><span class="ja">よくある反論と回答</span><span class="en">Objections, answered</span></h2>
+
+    <details>
+      <summary><span class="ja">Q1. フォーマットに罪はない。悪いのは運用では？</span><span class="en">Q1. "Blame the users, not the format."</span></summary>
+      <div class="a"><p>
+        <span class="ja">半分は正しい指摘です。KML 2.2仕様には <code>ExtendedData</code> という構造化属性の仕組みが確かにあります。しかしその仕様を書いてOGCに提出したのはGoogle自身であり、Googleの公式ドキュメントは「Google Earthはこの型付き情報を使用しない」と明記し、Google製ツールは属性をdescriptionのHTMLとして出力する形を20年間の事実上の標準にしました。本サイトが示した2026年取得の実データ2点（自治体配布KML・マイマップ出力）が、その帰結です。標準の起草者が自らの標準の正しい使い方を実装しないとき、流通するファイルの品質を利用者の責任と呼ぶのは妥当ではありません。フォーマットの価値は仕様書ではなく、実際に流通するファイルで決まります。</span>
+        <span class="en">Half right. The KML 2.2 spec does define <code>ExtendedData</code> for structured attributes. But that spec was written and submitted to the OGC by Google — whose own documentation states that Google Earth does not use the typed information, and whose tools made description-HTML the de-facto standard output for twenty years. The two real files on this page, both retrieved in 2026 — one published by a city government, one exported from My Maps — are the result. When the author of a standard declines to implement its own standard correctly, attributing the quality of circulating files to users is not a serious position. A format's worth is determined by the files that actually circulate, not by its spec.</span>
+      </p></div>
+    </details>
+
+    <details>
+      <summary><span class="ja">Q2. ExtendedDataを正しく使ったKMLならいいのでは？</span><span class="en">Q2. What about <em>well-made</em> KML?</span></summary>
+      <div class="a"><p>
+        <span class="ja">理論上は大幅に改善します。しかし2つの現実があります。第一に、受け手側ツールがExtendedDataを一貫して扱う保証がありません（起草者のGoogle Earth自身が型情報を無視することが象徴的です）。第二に、ExtendedDataを正しく書ける制作者はGeoJSONも書けます。そしてGeoJSONでは「正しく構造化できているか」という問い自体が発生しません——構造化以外の書き方が存在しないからです。間違えようのない形式が普及している以上、間違えやすい形式を配布用に選ぶ理由はありません。</span>
+        <span class="en">In theory, a big improvement. Two realities intervene. First, there is no guarantee the receiving toolchain handles ExtendedData consistently — the spec's own author, Google Earth, ignoring the typed information is emblematic. Second, anyone capable of writing correct ExtendedData is capable of writing GeoJSON, where the question "did I structure this correctly?" cannot arise, because unstructured is not an option. With a format you can't get wrong widely available, there is no case for shipping one you easily can.</span>
+      </p></div>
+    </details>
+
+    <details>
+      <summary><span class="ja">Q3. KMLはOGCの国際標準ですよね？</span><span class="en">Q3. But KML is an OGC standard.</span></summary>
+      <div class="a"><p>
+        <span class="ja">GMLも国際標準です。標準であることと、データ交換に適していることは別の性質です。実務におけるWeb地図のデファクト交換形式はGeoJSON（IETF RFC 7946）であり、主要な地図ライブラリ・GISツール・データベースがネイティブ対応しています。「標準だから」という主張は、その標準のファイルが実際にどう流通しているかを確認してはじめて意味を持ちます。</span>
+        <span class="en">So is GML. Being a standard and being a good interchange format are different properties. The de-facto interchange format of practical web mapping is GeoJSON (IETF RFC 7946), natively supported across mapping libraries, GIS tools and databases. "It's a standard" only means something after you look at how files of that standard actually circulate.</span>
+      </p></div>
+    </details>
+
+    <details>
+      <summary><span class="ja">Q4. Google Earthで見るにはKMLが必要では？</span><span class="en">Q4. I need KML to view things in Google Earth.</span></summary>
+      <div class="a"><p>
+        <span class="ja">その前提は、すでに古くなっています。Web版・モバイル版のGoogle Earthは、KML/KMZに加えて<strong>GeoJSONとShapefile（.zip）を直接インポートできます</strong><a href="#src">[17]</a>。2026年4月にはShapefile対応が正式に追加されました<a href="#src">[18]</a>。つまり、GeoJSONで配布すればGoogle Earthのユーザーも変換なしでそのまま開けます。「Google Earthで見るためにKMLが要る」という理由は、もう成り立ちません。むしろデスクトップ版が配布終了に向かう一方で、Web版が構造化フォーマットを読めるようになった——時代はKMLから離れる方向に進んでいます。なお、どうしてもKMLファイルが必要な場面でも、GeoJSONからKMLへは1コマンドで変換できます。逆に、descriptionにHTMLが焼き込まれたKMLの構造を復元するには、本ページで実演した通り専用パーサが必要です。この非対称性が、配布形式の選択に対する答えです。</span>
+        <span class="en">That premise is already out of date. Google Earth for web and mobile can <strong>import GeoJSON and Shapefile (.zip) directly</strong>, alongside KML/KMZ <a href="#src">[17]</a> — Shapefile support was officially added in April 2026 <a href="#src">[18]</a>. So if you distribute GeoJSON, Google Earth users open it as-is, no conversion. "I need KML to view it in Google Earth" no longer holds. If anything, the trend runs the other way: the desktop app heads for sunset while the web app learns to read structured formats. And on the rare occasion you truly need a KML file, GeoJSON converts to KML in one command — whereas recovering structure from HTML-stuffed KML, as this page demonstrates, requires a custom parser. That asymmetry answers the question of what belongs on the download page.</span>
+      </p></div>
+    </details>
+
+    <details>
+      <summary><span class="ja">Q5. GeoJSONにも欠点があるのでは？</span><span class="en">Q5. GeoJSON has flaws too.</span></summary>
+      <div class="a"><p>
+        <span class="ja">あります。巨大データには不向きで、座標系はWGS 84に固定されています。だから本サイトは「GeoJSONが万能」とは主張しません。配布はGeoJSON、大規模はFlatGeobufやGeoParquet、タイルはPMTiles、表計算文化圏にはCSV——第六条の通り用途別に選べます。共通するのは属性が構造化されていることです。KMLの問題は欠点の存在ではなく、データの最も価値ある半分（属性）を封印する慣習とセットで流通してきたことにあります。</span>
+        <span class="en">It does. It's poor for very large data and pins you to WGS 84. That's why this site doesn't claim GeoJSON is perfect — GeoJSON for distribution, FlatGeobuf or GeoParquet for scale, PMTiles for tiles, CSV for spreadsheet users, per Article 6. What they share is structured attributes. KML's problem was never having flaws; it's circulating bundled with a convention that seals away the most valuable half of the data.</span>
+      </p></div>
+    </details>
+
+    <details>
+      <summary><span class="ja">Q6. Shapefileはいいんですか？</span><span class="en">Q6. And Shapefile gets a pass?</span></summary>
+      <div class="a"><p>
+        <span class="ja">いいえ。Shapefileには別の問題群（属性名10文字制限、複数ファイル構成、文字コードの混乱など）があり、GISコミュニティには先行する啓発サイト <a href="http://switchfromshapefile.org/" rel="noopener">switchfromshapefile.org</a> が存在します。本サイトはそのKML版に相当します。前世紀に設計されたフォーマットは、それぞれの理由で引退の時期を迎えています。</span>
+        <span class="en">No. Shapefile has its own catalog of problems (10-character field names, multi-file fragility, encoding chaos), and the GIS community already built <a href="http://switchfromshapefile.org/" rel="noopener">switchfromshapefile.org</a> for it. Consider this site its KML counterpart. The formats designed last century are each reaching retirement age, for their own reasons.</span>
+      </p></div>
+    </details>
+
+    <details>
+      <summary><span class="ja">Q7. 組織の方針でKMLと決まっています</span><span class="en">Q7. Our org mandates KML.</span></summary>
+      <div class="a"><p>
+        <span class="ja">方針の原文を確認することをお勧めします。現行のオープンデータ政策が求めているのは一般に機械判読性であって、KMLの指定ではありません。実務的な移行案は「正データをGeoJSONまたはCSVで公開し、KMLは正データから自動生成して併記する」構成です。既存のKML利用者の作業は何も変わらず、組織内の手続き上も「廃止」ではなく「追加」として提案できます。</span>
+        <span class="en">Check what the mandate actually says — most open-data policies require machine readability, not KML specifically. The pragmatic migration: publish GeoJSON or CSV as canonical, auto-generate KML from it as a courtesy copy. Nobody's workflow breaks, and internally it's an addition, not a removal.</span>
+      </p></div>
+    </details>
+
+    <details>
+      <summary><span class="ja">Q8. マイマップしか使えない環境です</span><span class="en">Q8. My Maps is all we have.</span></summary>
+      <div class="a"><p>
+        <span class="ja">問題ありません。マイマップは緯度経度（または住所）列を持つCSVを直接インポートできます。したがって「配布はCSV/GeoJSONを正とし、マイマップにはCSVを読ませる」構成で、現在の作業手順は維持できます。変わるのは、配布したデータが受け取った側でも「データ」であり続けることだけです。</span>
+        <span class="en">You're covered. My Maps imports CSV with lat/lon (or address) columns directly. Distribute CSV/GeoJSON as canonical, feed the CSV to My Maps — your workflow doesn't change. The only difference is that what you hand out remains <em>data</em> on arrival.</span>
+      </p></div>
+    </details>
+
+    <details>
+      <summary><span class="ja">Q9. 手元に大量のKML資産があります</span><span class="en">Q9. We're sitting on years of KML.</span></summary>
+      <div class="a"><p>
+        <span class="ja">過去のデータは救済できます。<code>ogr2ogr output.geojson input.kml</code>（KMZ直接対応）、ブラウザなら <code>@tmcw/togeojson</code>、descriptionにHTMLが入ったファイルにはQGISの「KML Tools」プラグイン（2列テーブル・tag=value・tag: value の3方言に対応）が使えます。すべては救えないかもしれませんが、多くは救えます。本サイトの提案は過去の清算ではなく、新規の発生を止めることです。</span>
+        <span class="en">Legacy data is recoverable. <code>ogr2ogr output.geojson input.kml</code> (reads KMZ directly); in the browser, <code>@tmcw/togeojson</code>; for HTML-stuffed descriptions, the QGIS KML Tools plugin handles the three known dialects. You may not save everything, but you'll save most of it. The proposal here isn't about the past — it's to stop minting new cases.</span>
+      </p></div>
+    </details>
+
+    <details>
+      <summary><span class="ja">Q10. Google Earth Proは2027年に使えなくなるのですか？</span><span class="en">Q10. So Google Earth Pro dies in 2027?</span></summary>
+      <div class="a"><p>
+        <span class="ja">正確には「2027年6月25日以降、新規ダウンロードの提供が終了」です。インストール済みの環境では動作し続けますが、更新は提供されません。つまり、現在のKML出力の形を定着させたソフトウェアが、修正される可能性のないまま現場に残り続けます。配布形式の見直しを「今」提案する理由はここにあります。</span>
+        <span class="en">Precisely: downloads end June 25, 2027. Installed copies keep running but receive no updates. The software that entrenched today's KML output will remain in the field with no possibility of a fix. That is why the time to reconsider distribution formats is now.</span>
+      </p></div>
+    </details>
+
+    <details>
+      <summary><span class="ja">Q11. このサイトは誰が運営していますか？Googleと関係は？</span><span class="en">Q11. Who runs this? Affiliated with Google?</span></summary>
+      <div class="a"><p>
+        <span class="ja">独立したGIS/Webエンジニアによる非営利の啓発プロジェクトです。Google LLC、OGC、引用した各組織とは一切関係ありません。KML、Google Earth、Googleマイマップは各権利者の商標であり、本サイトでは批評・解説の目的でのみ言及しています。事実誤認のご指摘は歓迎します。掲載内容はすべて一次資料へのリンクとともに提示しています。</span>
+        <span class="en">An independent, non-commercial awareness project by a GIS/web engineer. Not affiliated with Google LLC, the OGC, or any cited organization. KML, Google Earth and Google My Maps are trademarks of their respective owners, referenced solely for commentary and criticism. Corrections are welcome; every claim on this site links to a primary source.</span>
+      </p></div>
+    </details>
+  </div>
+</section>
+
+<!-- ============ 9. SOURCES ============ -->
+<section id="src">
+  <div class="wrap">
+    <p class="art-label"><span class="ja">附則</span><span class="en">APPENDIX</span></p>
+    <h2><span class="ja">出典</span><span class="en">Sources</span></h2>
+    <ol class="src">
+      <li><span class="ja">伊勢市オープンデータ「観光案内所・手荷物預かり所」（MapData/KML）配布ページ（2026年7月10日取得）</span><span class="en">Ise City Open Data: Tourist Information Desks (MapData/KML), retrieved July 10, 2026</span> — <a href="https://www.city.ise.mie.jp/cgi-opd/opendata_detail.cgi?id=7c9c1758a69815061b04d379e95b4098f52434bb" rel="noopener">city.ise.mie.jp</a></li>
+      <li><span class="ja">伊勢市「MapData（KMLファイル）の利用方法」（マイマップへのインポート手順の公式案内）</span><span class="en">Ise City: official instructions for loading MapData KML into Google My Maps</span> — <a href="https://www.city.ise.mie.jp/opendata/detail/1016708.html" rel="noopener">city.ise.mie.jp</a></li>
+      <li><span class="ja">Google Earth Versions（配布終了告知）</span><span class="en">Google Earth Versions (end-of-download notice)</span> — <a href="https://www.google.com/earth/about/versions/" rel="noopener">google.com/earth</a></li>
+      <li><span class="ja">Google Earth Pro配布終了の報道（既存インストール継続の確認、Web版25万頂点制限への批判。2026年7月8日〜）</span><span class="en">Press coverage of the desktop sunset (installed copies keep working; criticism of the web version's 250k-vertex cap), July 2026</span> — <a href="https://www.androidauthority.com/google-earth-pro-desktop-sunset-3685256/" rel="noopener">Android Authority</a> / <a href="https://www.pcworld.com/article/3186820/you-have-until-2027-to-download-google-earth-pro-do-it-now.html" rel="noopener">PCWorld</a></li>
+      <li><span class="ja">KML Reference（Google）</span><span class="en">KML Reference (Google)</span> — <a href="https://developers.google.com/kml/documentation/kmlreference" rel="noopener">developers.google.com</a></li>
+      <li><span class="ja">Adding Custom Data（Google。「Google Earth does not use this typed information」の記載）</span><span class="en">Adding Custom Data (Google; "Google Earth does not use this typed information")</span> — <a href="https://developers.google.com/kml/documentation/extendeddata" rel="noopener">developers.google.com</a></li>
+      <li><span class="ja">OGC KML標準</span><span class="en">OGC KML standard</span> — <a href="https://www.ogc.org/publications/standard/kml/" rel="noopener">ogc.org</a></li>
+      <li><span class="ja">NationalSecurityAgency/qgis-kmltools-plugin（README該当箇所）</span><span class="en">NationalSecurityAgency/qgis-kmltools-plugin (README)</span> — <a href="https://github.com/NationalSecurityAgency/qgis-kmltools-plugin" rel="noopener">github.com</a></li>
+      <li><span class="ja">KML Tools（QGIS公式プラグインリポジトリ）</span><span class="en">KML Tools (QGIS plugin repository)</span> — <a href="https://plugins.qgis.org/plugins/kmltools/" rel="noopener">plugins.qgis.org</a></li>
+      <li><span class="ja">防災リテラシー研究所「マイマップを地理院地図に表示」</span><span class="en">Bosai Literacy Institute: displaying My Maps KML in GSI Maps</span> — <a href="https://bosailiteracy.org/literacy/mymap/link-to-googlemap-4/export-to-gsi/" rel="noopener">bosailiteracy.org</a></li>
+      <li><span class="ja">GDAL LIBKMLドライバ（KMZ直接対応）</span><span class="en">GDAL LIBKML driver (reads KMZ directly)</span> — <a href="https://gdal.org/en/stable/drivers/vector/libkml.html" rel="noopener">gdal.org</a></li>
+      <li>@tmcw/togeojson — <a href="https://www.npmjs.com/package/@tmcw/togeojson" rel="noopener">npmjs.com</a></li>
+      <li><span class="ja">GeoJSON（IETF RFC 7946）/ FlatGeobuf / GeoParquet / PMTiles 各公式サイト</span><span class="en">GeoJSON (IETF RFC 7946) / FlatGeobuf / GeoParquet / PMTiles official sites</span> — <a href="https://datatracker.ietf.org/doc/html/rfc7946" rel="noopener">RFC 7946</a> / <a href="https://flatgeobuf.org/" rel="noopener">flatgeobuf.org</a> / <a href="https://geoparquet.org/" rel="noopener">geoparquet.org</a> / <a href="https://protomaps.com/docs/pmtiles" rel="noopener">pmtiles</a></li>
+      <li><span class="ja">switchfromshapefile.org（先行事例）</span><span class="en">switchfromshapefile.org (precedent)</span> — <a href="http://switchfromshapefile.org/" rel="noopener">switchfromshapefile.org</a></li>
+      <li><span class="ja">Googleマイマップから書き出したKML実サンプル3点の解析（2022年・2024年・2025年作成の各マップ。2026年7月に当サイトが解析・保管。主題を伏せて技術的事実のみを引用）</span><span class="en">Analysis of three real KML exports from Google My Maps (maps created in 2022, 2024, 2025; analyzed and archived by this site in July 2026; cited for technical facts only, topics withheld)</span><br>
+        <span style="font-size:.92em">
+        <a href="https://www.google.com/maps/d/viewer?hl=ja&amp;mid=1J7cOnp4pHofSnagRkk4P6tClgZiTGFvH" rel="noopener">*1</a>（2022）　
+        <a href="https://www.google.com/maps/d/viewer?hl=ja&amp;mid=1MrkwzgZLv4RRrGRx__lr5U0dH6QcI5Y" rel="noopener">*2</a>（2024）　
+        <a href="https://www.google.com/maps/d/viewer?hl=ja&amp;mid=1ukgmoDn19oih2B9Epqf_JtD-172VPls" rel="noopener">*3</a>（2025）
+        </span></li>
+      <li><span class="ja">伊勢市オープンデータ利用規約（平成28年12月12日制定、令和3年4月1日改正。CC BY 4.0・改変利用時のクレジット書式の定め）</span><span class="en">Ise City Open Data Terms of Use (CC BY 4.0; prescribed credit format for adapted works)</span> — <a href="https://www.city.ise.mie.jp/opendata/detail/1004370.html" rel="noopener">city.ise.mie.jp</a></li>
+      <li><span class="ja">Import data into Google Earth（Google。Web版・モバイル版がKML/KMZ・GeoJSON・Shapefileを直接インポート対応と明記）</span><span class="en">Import data into Google Earth (Google; web and mobile support direct import of KML/KMZ, GeoJSON and Shapefile)</span> — <a href="https://developers.google.com/maps/documentation/earth/import-kml" rel="noopener">developers.google.com</a></li>
+      <li><span class="ja">Google Maps Platform ブログ「Shapefileと3Dモデルのインポート対応」（2026年4月。KML/KMZ・GeoJSONに加えShapefile対応を追加）</span><span class="en">Google Maps Platform blog: new Shapefile and 3D model imports (April 2026)</span> — <a href="https://mapsplatform.google.com/resources/blog/bring-more-of-your-data-to-google-earth-with-new-shapefile-and-3d-model-imports/" rel="noopener">mapsplatform.google.com</a></li>
+    </ol>
+  </div>
+</section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <p><span class="ja">本サイトは独立した非営利の啓発プロジェクトであり、Google LLC・OGC・引用元の各組織とは無関係です。KML、Google Earth、Googleマイマップは各権利者の商標です。</span><span class="en">An independent, non-commercial project. Not affiliated with Google LLC, the OGC, or any cited organization. KML, Google Earth and Google My Maps are trademarks of their respective owners.</span></p>
+    <p><span class="ja">このサイトは、以下の著作物を改変して利用しています。「観光案内所・手荷物預かり所（MapData）」、伊勢市、<a href="https://creativecommons.org/licenses/by/4.0/deed.ja" rel="noopener">クリエイティブ・コモンズ・ライセンス表示4.0国際</a>。掲載にあたっての抜粋およびGeoJSONへの変換は本サイトが行ったものであり、伊勢市によるものではありません。</span><span class="en">This site adapts the following work: "Tourist Information Desks &amp; Baggage Storage (MapData)", Ise City, <a href="https://creativecommons.org/licenses/by/4.0/" rel="noopener">Creative Commons Attribution 4.0 International</a>. The excerpting and GeoJSON conversion shown here were performed by this site, not by Ise City.</span></p>
+    <p><span class="ja">本サイトのロゴ・文面は CC BY 4.0 で再利用できます。誤りの指摘・お問い合わせ: <a href="https://x.com/_shimizu" rel="noopener">X @_shimizu（Masayuki Shimizu）</a></span><span class="en">Logo and copy: CC BY 4.0. Corrections &amp; contact: <a href="https://x.com/_shimizu" rel="noopener">X @_shimizu (Masayuki Shimizu)</a></span></p>
+  </div>
+</footer>
+
+<script type="module" src="./index.js"></script>
 </body>
 </html>
