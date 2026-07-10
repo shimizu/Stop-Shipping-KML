@@ -388,6 +388,10 @@
       <span class="en">Make GeoJSON (or CSV) the canonical dataset. For users who need KML, generate it from the canonical data. The reverse direction, as demonstrated above, means writing a custom parser.</span>
     </p>
     <pre><code>ogr2ogr out.kml in.geojson   <span class="cm"># <span class="ja">正データ→KML併記はこの1行</span><span class="en">canonical → courtesy KML, one line</span></span></code></pre>
+    <p>
+      <span class="ja">あわせて、<strong>Google Earth Proを新たに導入しない・使いつづけない</strong>ことも重要です。デスクトップ版は2027年6月25日に配布終了となり、以後更新されません<a href="#src">[3]</a>。更新されないビューアを前提にデータを整備することは、KML中心のワークフローを温存することにつながります。</span>
+      <span class="en">Equally important: <strong>don't adopt — or keep relying on — Google Earth Pro</strong>. The desktop app's distribution ends on June 25, 2027, and it will not be updated afterwards <a href="#src">[3]</a>. Building data pipelines around an unmaintained viewer is exactly what keeps KML-centric workflows alive.</span>
+    </p>
 
     <h3><span class="ja">KMLを受け取ってしまった方へ</span><span class="en">If you've been handed KML</span></h3>
     <ul class="plain">
@@ -437,8 +441,8 @@
     <details>
       <summary><span class="ja">Q4. Google Earthで見るにはKMLが必要では？</span><span class="en">Q4. I need KML to view things in Google Earth.</span></summary>
       <div class="a"><p>
-        <span class="ja">その前提は、すでに古くなっています。Web版・モバイル版のGoogle Earthは、KML/KMZに加えて<strong>GeoJSONとShapefile（.zip）を直接インポートできます</strong><a href="#src">[17]</a>。2026年4月にはShapefile対応が正式に追加されました<a href="#src">[18]</a>。つまり、GeoJSONで配布すればGoogle Earthのユーザーも変換なしでそのまま開けます。「Google Earthで見るためにKMLが要る」という理由は、もう成り立ちません。むしろデスクトップ版が配布終了に向かう一方で、Web版が構造化フォーマットを読めるようになった——時代はKMLから離れる方向に進んでいます。なお、どうしてもKMLファイルが必要な場面でも、GeoJSONからKMLへは1コマンドで変換できます。逆に、descriptionにHTMLが焼き込まれたKMLの構造を復元するには、本ページで実演した通り専用パーサが必要です。この非対称性が、配布形式の選択に対する答えです。</span>
-        <span class="en">That premise is already out of date. Google Earth for web and mobile can <strong>import GeoJSON and Shapefile (.zip) directly</strong>, alongside KML/KMZ <a href="#src">[17]</a> — Shapefile support was officially added in April 2026 <a href="#src">[18]</a>. So if you distribute GeoJSON, Google Earth users open it as-is, no conversion. "I need KML to view it in Google Earth" no longer holds. If anything, the trend runs the other way: the desktop app heads for sunset while the web app learns to read structured formats. And on the rare occasion you truly need a KML file, GeoJSON converts to KML in one command — whereas recovering structure from HTML-stuffed KML, as this page demonstrates, requires a custom parser. That asymmetry answers the question of what belongs on the download page.</span>
+        <span class="ja">その前提は、すでに古くなっています。Web版・モバイル版のGoogle Earthは、KML/KMZに加えて<strong>GeoJSONとShapefile（.zip）を直接インポートできます</strong><a href="#src">[17]</a>。つまり、GeoJSONで配布すればGoogle Earthのユーザーも変換なしでそのまま開けます。「Google Earthで見るためにKMLが要る」という理由は、もう成り立ちません。むしろデスクトップ版が配布終了に向かう一方で、Web版が構造化フォーマットを読めるようになった——時代はKMLから離れる方向に進んでいます。なお、どうしてもKMLファイルが必要な場面でも、GeoJSONからKMLへは1コマンドで変換できます。逆に、descriptionにHTMLが焼き込まれたKMLの構造を復元するには、本ページで実演した通り専用パーサが必要です。この非対称性が、配布形式の選択に対する答えです。</span>
+        <span class="en">That premise is already out of date. Google Earth for web and mobile can <strong>import GeoJSON and Shapefile (.zip) directly</strong>, alongside KML/KMZ <a href="#src">[17]</a>. So if you distribute GeoJSON, Google Earth users open it as-is, no conversion. "I need KML to view it in Google Earth" no longer holds. If anything, the trend runs the other way: the desktop app heads for sunset while the web app learns to read structured formats. And on the rare occasion you truly need a KML file, GeoJSON converts to KML in one command — whereas recovering structure from HTML-stuffed KML, as this page demonstrates, requires a custom parser. That asymmetry answers the question of what belongs on the download page.</span>
       </p></div>
     </details>
 
@@ -527,9 +531,7 @@
         <a href="https://www.google.com/maps/d/viewer?hl=ja&amp;mid=1ukgmoDn19oih2B9Epqf_JtD-172VPls" rel="noopener">*3</a>（2025）
         </span></li>
       <li><span class="ja">伊勢市オープンデータ利用規約（平成28年12月12日制定、令和3年4月1日改正。CC BY 4.0・改変利用時のクレジット書式の定め）</span><span class="en">Ise City Open Data Terms of Use (CC BY 4.0; prescribed credit format for adapted works)</span> — <a href="https://www.city.ise.mie.jp/opendata/detail/1004370.html" rel="noopener">city.ise.mie.jp</a></li>
-      <li><span class="ja">Import data into Google Earth（Google。Web版・モバイル版がKML/KMZ・GeoJSON・Shapefileを直接インポート対応と明記）</span><span class="en">Import data into Google Earth (Google; web and mobile support direct import of KML/KMZ, GeoJSON and Shapefile)</span> — <a href="https://developers.google.com/maps/documentation/earth/import-kml" rel="noopener">developers.google.com</a></li>
-      <li><span class="ja">Google Maps Platform ブログ「Shapefileと3Dモデルのインポート対応」（2026年4月。KML/KMZ・GeoJSONに加えShapefile対応を追加）</span><span class="en">Google Maps Platform blog: new Shapefile and 3D model imports (April 2026)</span> — <a href="https://mapsplatform.google.com/resources/blog/bring-more-of-your-data-to-google-earth-with-new-shapefile-and-3d-model-imports/" rel="noopener">mapsplatform.google.com</a></li>
-    </ol>
+      <li><span class="ja">Import data into Google Earth（Google。Web版・モバイル版がKML/KMZ・GeoJSON・Shapefileを直接インポート対応と明記）</span><span class="en">Import data into Google Earth (Google; web and mobile support direct import of KML/KMZ, GeoJSON and Shapefile)</span> — <a href="https://developers.google.com/maps/documentation/earth/import-kml" rel="noopener">developers.google.com</a></li>    </ol>
   </div>
 </section>
 
