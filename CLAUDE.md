@@ -1,48 +1,36 @@
-# CLAUDE.md - プロジェクト情報
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## プロジェクト概要
-- **名前**: prejs-minimum-template
-- **説明**: preJSプロジェクトのミニマムテンプレート
-- **バンドラー**: Vite
-- **言語**: JavaScript (ES6+), SCSS
 
-## 開発環境
-### 必要なコマンド
-- **開発サーバー起動**: `npm run dev`
-- **本番ビルド**: `npm run build`
-- **プレビュー**: `npm run preview`
-- **デプロイ**: `npm run deploy`
+「Stop Shipping KML(脱KML)」— データ配布フォーマットとしてのKMLの問題点を解説する非営利の啓発サイト。日英バイリンガルの静的シングルページで、GitHub Pages(https://shimizu.github.io/Stop-Shipping-KML/)に公開される。ビルドツールは Vite。
 
-### ディレクトリ構造
-```
-/
-├── src/
-│   ├── index.js        # メインJavaScriptファイル
-│   └── index.scss      # メインスタイルファイル
-├── index.html          # エントリーポイント
-├── vite.config.js      # Vite設定
-└── package.json        # 依存関係・スクリプト
-```
+## コマンド
 
-## 技術スタック
-- **Vite**: 高速ビルドツール・開発サーバー
-- **Babel**: ES6+トランスパイル（React preset含む）
-- **Sass**: CSS拡張
-- **Video.js**: 動画プレイヤーライブラリ
-- **Legacy Plugin**: 古いブラウザサポート
+- **開発サーバー**: `npm run dev`(ブラウザが自動で開く)
+- **本番ビルド**: `npm run build`(出力先は `dist/`)
+- **ビルド確認**: `npm run preview`
+- **デプロイ**: `npm run deploy`(gh-pages で `dist/` を公開。事前に `npm run build` が必要)
 
-## 開発時の注意事項
-- 開発サーバーは自動でブラウザを開く設定
-- ビルド出力は `dist/` ディレクトリ
-- IE11以外の古いブラウザをサポート
-- GitHub Pagesへのデプロイが可能
+テスト・リンターは導入されていない。
 
-## 言語・地域設定
-- **主要言語**: 日本語
-- **コミットメッセージ**: 日本語で記述
-- **コメント・ドキュメント**: 日本語で記述
+## アーキテクチャ
 
-## よく使用するワークフロー
-1. **新機能開発**: `npm run dev` で開発サーバー起動
-2. **ビルド確認**: `npm run build` でビルド、`npm run preview` で確認
-3. **デプロイ**: `npm run deploy` でGitHub Pagesに公開
+Vite の `root` が `src/` に設定されている点が最重要(`vite.config.js`)。エントリーポイントの `index.html` はプロジェクトルートではなく **`src/index.html`** にある。静的アセット(OGP画像、favicon など)は `public/` に置くと `publicDir: '../public'` の設定でビルド時にコピーされる。`base: "./"` は GitHub Pages のサブパス配信のための相対パス設定なので変更しないこと。
+
+### コンテンツ構造(バイリンガル方式)
+
+- ページ本文はほぼすべて `src/index.html` に直接書かれている(547行)。日本語と英語のテキストは同じ場所に `<span class="ja">` / `<span class="en">` のペアで併記し、`<html>` の `data-lang` 属性で表示を切り替える。**テキストを追加・変更するときは必ず ja/en 両方を更新すること。**
+- `src/index.js` の役割は2つだけ: 言語切り替え関数 `setLang()`(HTML の inline `onclick` から呼べるよう `window` に公開している)と、2027年6月25日(Google Earth Pro デスクトップ版の配布終了日)までのカウントダウン表示。
+- スタイルは `src/index.scss` に集約。
+
+### その他の注意点
+
+- OGP メタタグ(`src/index.html` 内)の URL は絶対 URL(`https://shimizu.github.io/Stop-Shipping-KML/...`)で記述する必要がある。
+- `@vitejs/plugin-legacy` により古いブラウザ(IE 11 を除く)向けの legacy バンドルも生成される。
+
+## 言語・コミット規約
+
+- 応答・コメント・ドキュメント・コミットメッセージはすべて日本語。
+- コミットメッセージには `feat:` / `fix:` / `docs:` / `refactor:` / `perf:` / `test:` / `chore:` / `style:` のプレフィックスを付ける。
